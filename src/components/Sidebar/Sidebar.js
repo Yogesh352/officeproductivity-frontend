@@ -6,17 +6,15 @@ import { ClipboardIcon } from "../Icon";
 import { Group } from "@mantine/core";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize } =
-    useStateContext();
-  const location = useLocation();
-
-  console.log(location.pathname);
+  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
 
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize && screenSize <= 900) {
       setActiveMenu(false);
     }
   };
+
+  const location = useLocation();
 
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2";
@@ -47,14 +45,18 @@ const Sidebar = () => {
 
                 {item.links.map((link) => (
                   <NavLink
-                    to={`/${link.name}`}
+                    to={`/${link.to}`}
                     key={link.name}
                     onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? "#D580FF" : "",
+                    style={() => ({
+                      backgroundColor: location.pathname.includes(link.name)
+                        ? "#D580FF"
+                        : "",
                     })}
-                    className={({ isActive }) =>
-                      isActive ? activeLink : normalLink
+                    className={() =>
+                      location.pathname.includes(link.name)
+                        ? activeLink
+                        : normalLink
                     }
                   >
                     {link.icon}

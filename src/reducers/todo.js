@@ -1,4 +1,10 @@
-import { FETCH_ALL, DELETE, UPDATE, CREATE } from "../constants/actionTypes";
+import {
+  FETCH_ALL,
+  DELETE,
+  UPDATE,
+  CREATE,
+  COMPLETE,
+} from "../constants/actionTypes";
 
 const reducer = (todos = [], action) => {
   switch (action.type) {
@@ -6,10 +12,13 @@ const reducer = (todos = [], action) => {
       return action.payload; //state always has to equal to something here it is an array
 
     case CREATE:
-      console.log(action.payload);
       return [...todos, action.payload];
 
     case UPDATE:
+      return todos.map((todo) =>
+        todo._id === action.payload._id ? action.payload : todo
+      );
+    case COMPLETE:
       return todos.map((todo) =>
         todo._id === action.payload._id ? action.payload : todo
       );

@@ -1,8 +1,9 @@
-import { Modal, Text } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
 import { Button, Container, Grid, Grow } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getTodos } from "../../actions/todo";
+import NavigationControl from "../../components/Todo/NavigationControl/NavigationControl";
 import TodoForm from "../../components/Todo/TodoForm/TodoForm";
 import Todos from "../../components/Todo/Todos/Todos";
 
@@ -11,11 +12,13 @@ const Todo = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTodos());
   }, [currentId, dispatch]);
+
   return (
     <div>
       <Grow in>
@@ -30,10 +33,23 @@ const Todo = () => {
               <Text className="text-2xl font-bold"> Pending Tasks </Text>
             </Grid>
             <Grid item>
-              <TodoForm currentId={currentId} setCurrentId={setCurrentId} />
+              <Group>
+                <NavigationControl />
+                <Button onClick={handleOpen} variant="contained">
+                  Create Todo
+                </Button>
+                <TodoForm
+                  currentId={currentId}
+                  setCurrentId={setCurrentId}
+                  open={open}
+                  setOpen={setOpen}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                />
+              </Group>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-              <Todos setCurrentId={setCurrentId} />
+              <Todos currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
