@@ -2,15 +2,14 @@ import React from "react";
 import { Grid, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import Todo from "../Todo/Todo";
-import { Text } from "@mantine/core";
 
-const Todos = ({ currentId, setCurrentId }) => {
+const CompletedTodos = ({ setCurrentId }) => {
   const todos = useSelector((state) =>
-    state.todos.filter((p) => p.completed === false)
+    state.todos.filter((p) => p.completed === true)
   );
 
   return !todos.length ? (
-    <Text>No Pending Tasks</Text>
+    <CircularProgress />
   ) : (
     <Grid
       className="flex items-center"
@@ -20,11 +19,11 @@ const Todos = ({ currentId, setCurrentId }) => {
     >
       {todos.map((todo) => (
         <Grid key={todo._id} item xs={12} sm={6} md={6}>
-          <Todo todo={todo} currentId={currentId} setCurrentId={setCurrentId} />
+          <Todo todo={todo} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default Todos;
+export default CompletedTodos;

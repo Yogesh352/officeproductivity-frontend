@@ -1,5 +1,11 @@
 import * as api from "../api";
-import { FETCH_ALL, DELETE, UPDATE, CREATE } from "../constants/actionTypes";
+import {
+  FETCH_ALL,
+  DELETE,
+  UPDATE,
+  CREATE,
+  COMPLETE,
+} from "../constants/actionTypes";
 
 //Action creators
 export const getTodos = () => async (dispatch) => {
@@ -35,6 +41,16 @@ export const deleteTodo = (id) => async (dispatch) => {
     await api.deleteTodo(id);
 
     dispatch({ type: DELETE, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const completeTodo = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.completeTodo(id);
+
+    dispatch({ type: COMPLETE, payload: data });
   } catch (error) {
     console.log(error);
   }

@@ -6,6 +6,7 @@ import {
   HiMenu,
   HiBell,
   HiOutlineUserCircle,
+  HiPencil
 } from "react-icons/hi";
 import { MdOutlineCancel } from "react-icons/md";
 import { FiChevronLeft } from "react-icons/fi";
@@ -17,6 +18,8 @@ import {
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
 } from "react-icons/ai";
+
+import { IconDots, IconEye, IconFileZip, IconTrash } from "@tabler/icons";
 
 export const DashboardIcon = HiOutlineTemplate;
 export const LeftIcon = FiChevronLeft;
@@ -31,3 +34,6 @@ export const CalendarIcon = AiOutlineCalendar;
 export const ContactsIcon = IoMdContacts;
 export const MenufoldIcon = AiOutlineMenuFold;
 export const MenuunfoldIcon = AiOutlineMenuUnfold;
+export const EditIcon = HiPencil;
+export const DropdownMenuIcon = IconDots;
+export const DeleteIcon = IconTrash;

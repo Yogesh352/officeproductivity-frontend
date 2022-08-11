@@ -6,24 +6,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { createTodo, updateTodo } from "../../../actions/todo";
 import useStyles from "./styles";
 
-const TodoForm = ({ currentId, setCurrentId }) => {
+const TodoForm = ({
+  currentId,
+  setCurrentId,
+  open,
+  setOpen,
+  handleOpen,
+  handleClose,
+}) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
   const todo = useSelector((state) =>
     currentId ? state.todos.find((p) => p._id === currentId) : null
   );
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [todoData, setTodoData] = useState({
     title: "",
     description: "",
     assignee: "",
-    deadline: "",
+    deadline: new Date(),
     priority: "",
   });
 
@@ -39,8 +42,10 @@ const TodoForm = ({ currentId, setCurrentId }) => {
   };
 
   useEffect(() => {
-    if (todo) setTodoData(todoData);
+    if (todo) setTodoData(todo);
   }, [todo]);
+
+  console.log(todoData.deadline);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,11 +62,14 @@ const TodoForm = ({ currentId, setCurrentId }) => {
     handleClose();
   };
 
+  const notdisabled = Object.values(todoData).every(
+    (todo) => todo.length !== 0
+  );
+
+  console.log(todoData);
+
   return (
     <>
-      <Button onClick={handleOpen} variant="contained">
-        Create Todo
-      </Button>
       <Modal opened={open} onClose={() => setOpen(false)}>
         <Paper className={`${classes.root} ${classes.form} p-2`}>
           <form
@@ -135,7 +143,12 @@ const TodoForm = ({ currentId, setCurrentId }) => {
               }}
             />
             <Group position="right">
-              <Button variant="contained" color="primary" type="submit">
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!notdisabled}
+                type="submit"
+              >
                 Submit
               </Button>
               <Button variant="contained" onClick={clear}>

@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout";
 import Members from "./pages/Members/Members";
 import Todo from "./pages/Todo/Todo";
 import Auth from "./pages/Auth/Auth";
+import CompletedTodo from "./pages/Todo/CompletedTodo";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/members" element={<Members />} />
-          <Route path="/todo" element={<Todo />} />
+          <Route path="/todo/pending" element={<Todo />} />
+          <Route path="/todo/completed" element={<CompletedTodo />} />
         </Routes>
       </Layout>
     </BrowserRouter>
