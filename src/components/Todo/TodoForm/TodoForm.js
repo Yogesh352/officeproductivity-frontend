@@ -3,7 +3,7 @@ import { DatePicker } from "@mantine/dates";
 import { Button, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTodo, updateTodo } from "../../../actions/todo";
+import { createTodo, getTodos, updateTodo } from "../../../actions/todo";
 import useStyles from "./styles";
 
 const TodoForm = ({
@@ -31,7 +31,6 @@ const TodoForm = ({
   });
 
   const clear = () => {
-    setCurrentId(null);
     setTodoData({
       title: "",
       description: "",
@@ -39,24 +38,41 @@ const TodoForm = ({
       deadline: new Date(),
       priority: "",
     });
+    setCurrentId(null);
   };
 
   useEffect(() => {
-    if (todo) setTodoData(todo);
+    if (todo) {
+      setTodoData(todo);
+    } else {
+      setTodoData({
+        title: "",
+        description: "",
+        assignee: "",
+        deadline: new Date(),
+        priority: "",
+      });
+    }
   }, [todo]);
-
-  console.log(todoData.deadline);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (currentId === null) {
-      dispatch(createTodo({ ...todoData, name: user?.result?.name }));
+      await dispatch(
+        createTodo({
+          ...todoData,
+          name: user?.result?.name,
+          creator: user?.result?._id,
+        })
+      );
+
       clear();
     } else {
-      dispatch(
+      await dispatch(
         updateTodo(currentId, { ...todoData, name: user?.result?.name })
-      );
+      ).then(dispatch(getTodos()));
+
       clear();
     }
     handleClose();
@@ -65,8 +81,6 @@ const TodoForm = ({
   const notdisabled = Object.values(todoData).every(
     (todo) => todo.length !== 0
   );
-
-  console.log(todoData);
 
   return (
     <>

@@ -2,7 +2,7 @@ import { Group, Text } from "@mantine/core";
 import { Button, Container, Grid, Grow } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getTodos } from "../../actions/todo";
+import { completeTodo, getTodos, updateTodo } from "../../actions/todo";
 import NavigationControl from "../../components/Todo/NavigationControl/NavigationControl";
 import TodoForm from "../../components/Todo/TodoForm/TodoForm";
 import Todos from "../../components/Todo/Todos/Todos";
@@ -10,8 +10,14 @@ import Todos from "../../components/Todo/Todos/Todos";
 const Todo = () => {
   const [currentId, setCurrentId] = useState(null);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+    setCurrentId(null);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const dispatch = useDispatch();
 
@@ -35,7 +41,13 @@ const Todo = () => {
             <Grid item>
               <Group>
                 <NavigationControl />
-                <Button onClick={handleOpen} variant="contained">
+                <Button
+                  style={{
+                    backgroundColor: "#D580FF",
+                  }}
+                  onClick={handleOpen}
+                  variant="contained"
+                >
                   Create Todo
                 </Button>
                 <TodoForm

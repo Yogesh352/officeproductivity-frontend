@@ -25,6 +25,11 @@ export const links = [
         to: "chats",
         icon: <ChatIcon />,
       },
+      {
+        name: "social",
+        to: "social",
+        icon: <ContactsIcon />,
+      },
     ],
   },
   {

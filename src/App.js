@@ -8,6 +8,7 @@ import Members from "./pages/Members/Members";
 import Todo from "./pages/Todo/Todo";
 import Auth from "./pages/Auth/Auth";
 import CompletedTodo from "./pages/Todo/CompletedTodo";
+import Posts from "./pages/Post/Posts";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/members" element={<Members />} />
           <Route path="/todo/pending" element={<Todo />} />
           <Route path="/todo/completed" element={<CompletedTodo />} />
+          <Route path="/social" element={<Posts />} />
         </Routes>
       </Layout>
     </BrowserRouter>

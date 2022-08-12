@@ -13,22 +13,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import TodoPriority from "./TodoPriority";
 import { format } from "date-fns";
-import { completeTodo } from "../../../actions/todo";
-import { DeleteIcon, DropdownMenuIcon, EditIcon } from "../../Icon";
+import { completeTodo, deleteTodo } from "../../../actions/todo";
+import { DeleteIcon, DropdownMenuIcon, EditIcon, ExpandIcon } from "../../Icon";
 import { Button } from "@material-ui/core";
 import TodoForm from "../TodoForm/TodoForm";
-
-function titleCase(str) {
-  var splitStr = str.toLowerCase().split(" ");
-  for (var i = 0; i < splitStr.length; i++) {
-    // You do not need to check if i is larger than splitStr length, as your for does that for you
-    // Assign it back to the array
-    splitStr[i] =
-      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-  }
-  // Directly return the joined string
-  return splitStr.join(" ");
-}
+import ExpandedTodo from "./ExpandedTodo";
+import { titleCase } from "../../../functions/upperCase";
 
 const Todo = ({ todo, currentId, setCurrentId }) => {
   const dispatch = useDispatch();
@@ -36,17 +26,38 @@ const Todo = ({ todo, currentId, setCurrentId }) => {
 
   const [open, setOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [expandOpen, setExpandOpen] = useState(false);
 
   const handleOpen = () => setFormOpen(true);
-  const handleClose = () => setFormOpen(false);
+  const handleClose = () => {
+    setFormOpen(false);
+  };
 
   const handleConfirm = () => {
     dispatch(completeTodo(todo._id));
     setOpen(false);
   };
 
+  const expandHandleOpen = () => {
+    setExpandOpen(true);
+  };
+
+  const expandHandleClose = () => {
+    setExpandOpen(false);
+  };
+
   return (
     <>
+      {currentId !== null && (
+        <ExpandedTodo
+          currentId={currentId}
+          setCurrentId={setCurrentId}
+          open={expandOpen}
+          setOpen={setExpandOpen}
+          handleOpen={expandHandleOpen}
+          handleClose={expandHandleClose}
+        />
+      )}
       <TodoForm
         currentId={currentId}
         setCurrentId={setCurrentId}
@@ -77,30 +88,45 @@ const Todo = ({ todo, currentId, setCurrentId }) => {
           <Text weight={500} size="lg" mt="md">
             {todo.title}
           </Text>
-          {todo.completed === false && (
-            <Menu withinPortal position="bottom-end" shadow="sm">
-              <Menu.Target>
-                <ActionIcon>
-                  <DropdownMenuIcon size={16} />
-                </ActionIcon>
-              </Menu.Target>
+          <Group>
+            <ExpandIcon
+              className="cursor-pointer"
+              onClick={() => {
+                setCurrentId(todo._id);
+                setExpandOpen(true);
+              }}
+            />
+            {todo.completed === false && user?.result?._id === todo?.creator && (
+              <Menu withinPortal position="bottom-end" shadow="sm">
+                <Menu.Target>
+                  <ActionIcon>
+                    <DropdownMenuIcon size={16} />
+                  </ActionIcon>
+                </Menu.Target>
 
-              <Menu.Dropdown>
-                <Menu.Item
-                  onClick={() => {
-                    setCurrentId(todo._id);
-                    setFormOpen(true);
-                  }}
-                  icon={<EditIcon />}
-                >
-                  Edit
-                </Menu.Item>
-                <Menu.Item icon={<DeleteIcon size={14} />} color="red">
-                  Delete
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          )}
+                <Menu.Dropdown>
+                  <Menu.Item
+                    onClick={() => {
+                      setCurrentId(todo._id);
+                      setFormOpen(true);
+                    }}
+                    icon={<EditIcon />}
+                  >
+                    Edit
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => {
+                      dispatch(deleteTodo(todo._id));
+                    }}
+                    icon={<DeleteIcon size={14} />}
+                    color="red"
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            )}
+          </Group>
         </Group>
         <Text color="gray">{moment(todo.createdAt).fromNow()}</Text>
         <Text className="line-clamp-2">{todo.description}</Text>
@@ -127,6 +153,7 @@ const Todo = ({ todo, currentId, setCurrentId }) => {
           </Text>
           {todo.completed === false && (
             <Checkbox
+              className="cursor-pointer"
               label="COMPLETED"
               onClick={() => {
                 setOpen(true);
