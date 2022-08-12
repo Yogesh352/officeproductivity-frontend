@@ -1,7 +1,8 @@
 import React from "react";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import Todo from "../Todo/Todo";
+import { Text } from "@mantine/core";
 
 const CompletedTodos = ({ setCurrentId }) => {
   const todos = useSelector((state) =>
@@ -9,7 +10,7 @@ const CompletedTodos = ({ setCurrentId }) => {
   );
 
   return !todos.length ? (
-    <CircularProgress />
+    <Text>No Completed Tasks</Text>
   ) : (
     <Grid
       className="flex items-center"

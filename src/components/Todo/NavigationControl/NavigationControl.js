@@ -11,8 +11,6 @@ export default function NavigationControl() {
     [location]
   );
 
-  console.log(location.pathname.split("/").at(-1));
-
   return (
     <SegmentedControl
       data={[
