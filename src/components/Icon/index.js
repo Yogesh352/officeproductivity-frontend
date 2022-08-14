@@ -8,6 +8,7 @@ import {
   HiOutlineUserCircle,
   HiPencil,
   HiExternalLink,
+  HiPaperClip,
 } from "react-icons/hi";
 import { MdOutlineCancel } from "react-icons/md";
 import { FiChevronLeft } from "react-icons/fi";
@@ -39,3 +40,4 @@ export const EditIcon = HiPencil;
 export const DropdownMenuIcon = IconDots;
 export const DeleteIcon = IconTrash;
 export const ExpandIcon = HiExternalLink;
+export const AttachmentIcon = HiPaperClip;

@@ -32,7 +32,7 @@ const ExpandedTodo = ({
           </Text>
           <Text>
             <span className="text-gray-500">Assigned By: </span>
-            {todo && todo.name && titleCase(todo?.name)}
+            {todo && todo.name && titleCase(todo && todo?.name)}
           </Text>
         </Group>
         <Group position="apart">

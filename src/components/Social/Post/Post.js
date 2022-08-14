@@ -76,7 +76,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
           <Image src={post.selectedFile} height={160} alt="Uploaded Photo" />
         </Card.Section>
         <Group position="apart">
-          <Text className="font-bold">{titleCase(post.name)}</Text>
+          <Text className="font-bold">{post?.name}</Text>
           {user?.result?._id === post?.creator && (
             <Menu withinPortal position="bottom-end" shadow="sm">
               <Menu.Target>
