@@ -137,7 +137,7 @@ const Todo = ({ todo, currentId, setCurrentId }) => {
           </Text>
           <Text>
             <span className="text-gray-500">Assigned By: </span>
-            {titleCase(todo.name)}
+            {titleCase(todo?.name)}
           </Text>
           <Group>
             <Text>

@@ -13,6 +13,8 @@ API.interceptors.request.use((req) => {
 
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
+export const getUser = (id) => API.get(`/user?userId=${id}`);
+export const getAllUsers = () => API.get("/allUsers");
 
 export const fetchTodos = () => API.get("/todo");
 export const createTodo = (newTodo) => API.post("/todo", newTodo);
@@ -27,3 +29,5 @@ export const updatePost = (id, updatedPost) =>
   API.patch(`/posts/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
+
+export const getConversations = (id) => API.get(`/conversation/${id}`);
