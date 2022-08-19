@@ -1,13 +1,13 @@
-import { ChatIcon, DashboardIcon, TodoIcon, ContactsIcon } from "../Icon/index";
+import { ChatIcon, TodoIcon, ContactsIcon } from "../Icon/index";
 
 export const links = [
   {
-    title: "Dashboard",
+    title: "Planning",
     links: [
       {
-        name: "dashboard",
-        to: "dashboard",
-        icon: <DashboardIcon />,
+        name: "todo",
+        to: "todo/pending",
+        icon: <TodoIcon />,
       },
     ],
   },
@@ -16,8 +16,8 @@ export const links = [
     title: "Team",
     links: [
       {
-        name: "members",
-        to: "members",
+        name: "social",
+        to: "social",
         icon: <ContactsIcon />,
       },
       {
@@ -25,20 +25,11 @@ export const links = [
         to: "chats",
         icon: <ChatIcon />,
       },
+
       {
-        name: "social",
-        to: "social",
+        name: "members",
+        to: "members",
         icon: <ContactsIcon />,
-      },
-    ],
-  },
-  {
-    title: "Planning",
-    links: [
-      {
-        name: "todo",
-        to: "todo/pending",
-        icon: <TodoIcon />,
       },
     ],
   },

@@ -5,7 +5,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signIn(formData);
     dispatch({ type: AUTH, data });
-    navigate("/dashboard");
+    navigate("/todo/pending");
   } catch (error) {
     console.log(error);
   }
@@ -15,7 +15,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signUp(formData);
     dispatch({ type: AUTH, data });
-    navigate("/dashboard");
+    navigate("/todo/pending");
   } catch (error) {
     console.log(error);
   }
@@ -32,7 +32,7 @@ export const getUser = (id) => async (dispatch) => {
 
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const { data } = await api.fetchPosts();
+    const { data } = await api.getAllUsers();
     dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
     console.log(error);

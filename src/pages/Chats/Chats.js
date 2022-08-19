@@ -95,108 +95,112 @@ const Chats = () => {
   };
 
   return (
-    <Grid className="flex p-4" container alignItems="stretch" spacing={3}>
-      <Grid
-        className="bg-white border p-4 rounded-sm"
-        item
-        xs={12}
-        sm={3}
-        md={3}
-      >
-        <Text className="font-bold text-lg text-center justify-center items-center text-purple-400">
-          Conversations
-        </Text>
-        {conversations.map((conversation) => (
-          <div onClick={() => setCurrentChat(conversation)}>
-            <Conversation
-              key={conversation._id}
-              conversation={conversation}
-              currentUser={user}
-            />
-          </div>
-        ))}
-      </Grid>
-      <Grid
-        className="bg-white border p-4 rounded-sm"
-        item
-        xs={12}
-        sm={9}
-        md={9}
-      >
-        <div className="relative flex  flex-col justify-between">
-          {currentChat ? (
-            <div className="flex flex-col mb-4 p-4 h-[65vh] overflow-y-scroll">
-              {messages.length !== 0 ? (
-                messages.map((message) => (
-                  <div ref={scrollRef}>
-                    <Message
-                      key={message._id}
-                      message={message}
-                      own={message.sender === user?.result?._id}
-                    />
-                  </div>
-                ))
-              ) : (
-                <Text className="justify-center relative items-center text-center text-gray-400">
-                  Enter a Message to start a conversation
-                </Text>
-              )}
+    <>
+      <Text className="text-2xl font-bold pb-6"> Chats </Text>
+
+      <Grid className="flex p-4" container alignItems="stretch" spacing={3}>
+        <Grid
+          className="bg-white border p-4 rounded-sm"
+          item
+          xs={12}
+          sm={3}
+          md={3}
+        >
+          <Text className="font-bold text-lg text-center justify-center items-center text-purple-400">
+            Conversations
+          </Text>
+          {conversations.map((conversation) => (
+            <div onClick={() => setCurrentChat(conversation)}>
+              <Conversation
+                key={conversation._id}
+                conversation={conversation}
+                currentUser={user}
+              />
             </div>
-          ) : (
-            <span className="pt-12 text-xl text-gray-500 text-center items-center justify-center">
-              Open a conversation to start a chat
-            </span>
-          )}
-          {currentChat ? (
-            <>
-              <form onSubmit={handleSubmit}>
-                <Stack className="box-shadow-md">
-                  <Stack
-                    spacing={0}
-                    className="w-full border-solid-border-gray"
-                  >
-                    <Textarea
-                      onChange={(e) => {
-                        setNewMessage(e.target.value);
-                      }}
-                      value={newMessage}
-                      className="w-full"
-                      placeholder="Enter Message..."
-                    />
-                    <Group
-                      className="bg-white border-solid border-gray-900 p-2"
-                      position="apart"
-                    >
-                      <label htmlFor="img">
-                        <AttachmentIcon
-                          className="h-10 cursor-pointer"
-                          size={18}
-                          color="grey"
-                        />
-                      </label>
-                      <input
-                        type="file"
-                        id="img"
-                        accept="image/*"
-                        style={{ display: "none" }}
+          ))}
+        </Grid>
+        <Grid
+          className="bg-white border p-4 rounded-sm"
+          item
+          xs={12}
+          sm={9}
+          md={9}
+        >
+          <div className="relative flex  flex-col justify-between">
+            {currentChat ? (
+              <div className="flex flex-col mb-4 p-4 h-[65vh] overflow-y-scroll">
+                {messages.length !== 0 ? (
+                  messages.map((message) => (
+                    <div ref={scrollRef}>
+                      <Message
+                        key={message._id}
+                        message={message}
+                        own={message.sender === user?.result?._id}
                       />
-                      <Button
-                        disabled={submitDisabled}
-                        variant="contained"
-                        color="primary"
-                        type="submit"
+                    </div>
+                  ))
+                ) : (
+                  <Text className="justify-center relative items-center text-center text-gray-400">
+                    Enter a Message to start a conversation
+                  </Text>
+                )}
+              </div>
+            ) : (
+              <span className="pt-12 text-xl text-gray-500 text-center items-center justify-center">
+                Open a conversation to start a chat
+              </span>
+            )}
+            {currentChat ? (
+              <>
+                <form onSubmit={handleSubmit}>
+                  <Stack className="box-shadow-md">
+                    <Stack
+                      spacing={0}
+                      className="w-full border-solid-border-gray"
+                    >
+                      <Textarea
+                        onChange={(e) => {
+                          setNewMessage(e.target.value);
+                        }}
+                        value={newMessage}
+                        className="w-full"
+                        placeholder="Enter Message..."
+                      />
+                      <Group
+                        className="bg-white border-solid border-gray-900 p-2"
+                        position="apart"
                       >
-                        Send
-                      </Button>
-                    </Group>
+                        <label htmlFor="img">
+                          <AttachmentIcon
+                            className="h-10 cursor-pointer"
+                            size={18}
+                            color="grey"
+                          />
+                        </label>
+                        <input
+                          type="file"
+                          id="img"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                        />
+                        <Button
+                          disabled={submitDisabled}
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Send
+                        </Button>
+                      </Group>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </form>
-            </>
-          ) : null}
-        </div>
+                </form>
+              </>
+            ) : null}
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
