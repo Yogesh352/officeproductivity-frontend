@@ -117,7 +117,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
         <Stack>
           <Text color="gray">{moment(post.createdAt).fromNow()}</Text>
 
-          <Text>{post.message}</Text>
+          <Text className="line-clamp-2">{post.message}</Text>
           <Group postion="left">
             <Button
               size="small"
